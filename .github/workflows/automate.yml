@@ -15,7 +15,7 @@ jobs:
 
       - name: Sync with GitHub
         run: |
-          cd C:\Local_Drive\
+          cd C:\Local_Drive
           git config user.email "atharvajoshi1007@gmail.com"
           git config user.name "atharvajoshi1007"
           git remote add origin https://github.com/atharvajoshi1007/Jenkins.git
