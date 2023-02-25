@@ -1,0 +1,25 @@
+name: Sync with GitHub
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Sync with GitHub
+        run: |
+          git config user.email "atharvajoshi1007@gmail.com"
+          git config user.name "atharvajoshi1007"
+          git remote add origin https://github.com/atharvajoshi1007/Jenkins.git
+          git fetch origin
+          git checkout -b main origin/main
+          git merge origin/main
+          git add .
+          git commit -m "Sync with GitHub"
+          git push origin main
