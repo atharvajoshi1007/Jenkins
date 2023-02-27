@@ -1,0 +1,380 @@
+openapi: 3.0.0
+info:
+  title: Amazon Orders
+  description: CRUD on Orders of Amazon
+  contact:
+    name: Amazon
+    url: https://www.amazon.in/
+  version: 1.0.0
+servers:
+  - url: https://www.amazon.in/gp/product
+  - url: https://www.amazon.in/gp/your-account/order-history
+  - url: https://www.amazon.in/gp/your-account/order-details
+  - url: https://www.amazon.in/gp/cart/view.html
+  - url: https://www.amazon.in/gp/buy/products
+tags:
+  - name: Orders
+    description: All operations on orders
+    externalDocs:
+      description: Find out more
+      url: https://www.amazon.in/
+paths:
+  /payments/{token}:
+    get:
+      tags:
+        - Orders
+      description: operation to fetch order for which payment received
+      parameters:
+        - name: PayToken
+          in: query
+          schema:
+            type: string
+            example: GPAY92843462810802
+      responses:
+        '200':
+          description: Transaction Fetched Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+                    example: BSJSO2983247
+                  username:
+                    type: string
+                    example: AtharvaJoshi07
+                  orderamount:
+                    type: number
+                    example: 100
+                  paymentmode:
+                    type: string
+                    example: COD
+                  address:
+                    type: string
+                    example: Nagar
+                  date:
+                    type: string
+                    example: 10/02/2023
+        '401':
+          description: Unauthorized
+        '404':
+          description: No Transaction Found
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+  /Auth/orders:
+    get:
+      tags:
+        - Orders
+      description: operation to fetch all orders
+      parameters:
+        - name: AuthToken
+          in: query
+          schema:
+            type: string
+            example: AtharvaJoshi10072002
+      responses:
+        '200':
+          description: Order list fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+                    example: BSJSO2983247
+                  username:
+                    type: string
+                    example: AtharvaJoshi07
+                  orderamount:
+                    type: number
+                    example: 100
+                  paymentmode:
+                    type: string
+                    example: COD
+                  address:
+                    type: string
+                    example: Nagar
+                  date:
+                    type: string
+                    example: 10/02/2023
+        '401':
+          description: Unauthorized to get orders, Login First
+        '404':
+          description: Orders Not Found
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+  /order/{id}:
+    description: specific order details
+    get:
+      tags:
+        - Orders
+      description: operation to fetch order
+      parameters:
+        - name: OrderId
+          in: query
+          schema:
+            type: string
+            example: BSJSO2983247
+      responses:
+        '200':
+          description: Order fetched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+                    example: BSJSO2983247
+                  username:
+                    type: string
+                    example: AtharvaJoshi07
+                  orderamount:
+                    type: number
+                    example: 100
+                  paymentmode:
+                    type: string
+                    example: COD
+                  address:
+                    type: string
+                    example: Nagar
+                  date:
+                    type: string
+                    example: 10/02/2023
+        '400':
+          description: Invalid ID
+        '401':
+          description: Unauthorized to get orders, Login First
+        '404':
+          description: No order found with specified ID
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+    post:
+      tags:
+        - Orders
+      description: place order
+      parameters:
+        - name: PayToken
+          in: query
+          schema:
+            type: string
+            example: GPAY92843462810802
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                PayToken:
+                  type: string
+                  example: BSJSO2983247
+      responses:
+        '200':
+          description: Order Placed Successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+                    example: BSJSO2983247
+                  username:
+                    type: string
+                    example: AtharvaJoshi07
+                  orderamount:
+                    type: number
+                    example: 100
+                  paymentmode:
+                    type: string
+                    example: COD
+                  address:
+                    type: string
+                    example: Nagar
+                  date:
+                    type: string
+                    example: 10/02/2023
+        '400':
+          description: Invalid ID
+        '401':
+          description: Unauthorized to get orders, Login First
+        '404':
+          description: No order found with specified ID
+        '409':
+          description: Payment Already Done for Order
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+    delete:
+      tags:
+        - Orders
+      description: Cancel order
+      parameters:
+        - name: OrderId
+          in: query
+          schema:
+            type: string
+            example: BSJSO2983247
+      responses:
+        '204':
+          description: Order Cancelled. No orders to Show.
+        '400':
+          description: Invalid ID
+        '401':
+          description: Unauthorized to delete orders, Login First
+        '404':
+          description: No order found with specified ID
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+    patch:
+      tags:
+        - Orders
+      description: change the address for delivery
+      parameters:
+        - name: OrderId
+          in: query
+          schema:
+            type: string
+            example: BSJSO2983247
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date:
+                  type: string
+                  example: Nagar
+      responses:
+        '200':
+          description: address changed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+                    example: BSJSO2983247
+                  username:
+                    type: string
+                    example: AtharvaJoshi07
+                  orderamount:
+                    type: number
+                    example: 100
+                  paymentmode:
+                    type: string
+                    example: COD
+                  address:
+                    type: string
+                    example: Nagar
+                  date:
+                    type: string
+                    example: 10/02/2023
+        '207':
+          description: some items are not available for updated details
+        '400':
+          description: Invalid ID
+        '401':
+          description: Unauthorized to change order address, Login First
+        '404':
+          description: No order found with specified ID
+        '500':
+          description: Internal Server Error
+        '501':
+          description: Not Implemented
+        '502':
+          description: Bad Gateway
+        '503':
+          description: Service Unavailable
+components:
+  schemas:
+    product:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 100
+        name:
+          type: string
+          example: helmet
+        reviews:
+          type: number
+          example: 4.5
+        colour:
+          type: string
+          example: white
+    cart:
+      type: array
+      items:
+        properties:
+          amount:
+            type: number
+            example: 100
+          name:
+            type: string
+            example: helmet
+          reviews:
+            type: number
+            example: 4.5
+          colour:
+            type: string
+            example: black
+    order:
+      type: object
+      properties:
+        orderId:
+          type: string
+          example: BSJSO2983247
+        username:
+          type: string
+          example: AtharvaJoshi07
+        orderamount:
+          type: number
+          example: 100
+        paymentmode:
+          type: string
+          example: COD
+        address:
+          type: string
+          example: Nagar
+        date:
+          type: string
+          example: 10/02/2023
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+security:
+  - basicAuth: []
