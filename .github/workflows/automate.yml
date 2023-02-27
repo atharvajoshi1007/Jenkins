@@ -16,7 +16,6 @@ jobs:
       - name: Sync with GitHub
         env:
           PAT: ${{ secrets.PAT }}
-        working-directory: C:\backup\Jenkins
         run: |
           git config user.email "atharvajoshi1007@gmail.com"
           git config user.name "atharvajoshi1007"
